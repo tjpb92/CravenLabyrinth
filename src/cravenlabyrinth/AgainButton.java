@@ -14,6 +14,6 @@ import javax.swing.JButton;
 public class AgainButton extends JButton {
     
     public AgainButton() {
-        setName("Recommencer");
+        super("Recommencer");
     }
 }

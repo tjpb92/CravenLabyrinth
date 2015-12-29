@@ -14,6 +14,6 @@ import javax.swing.JButton;
 public class SolveButton extends JButton {
     
     public SolveButton() {
-        setName("Résoudre");
+        super("Résoudre");
     }
 }
