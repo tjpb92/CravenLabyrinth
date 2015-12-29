@@ -9,7 +9,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -23,26 +22,27 @@ import javax.swing.JPanel;
 
 public class CravenLabyrinth {
 
-    private static final int MUR = 0;
-    private static final int CASE_LIBRE = 1;
-    private static final int GEMME_ROUGE = 2;
-    private static final int GEMME_BLEUE = 3;
-    private static final int CORBEAU = 4;
-    private static final int NORD = 11;
-    private static final int EST = 21;
-    private static final int SUD = 31;
-    private static final int OUEST = 41;
-    private static final int DEPART = 50;
-    private static final int ARRIVEE = 60;
+    protected static final int MUR = 0;
+    protected static final int CASE_LIBRE = 1;
+    protected static final int GEMME_ROUGE = 2;
+    protected static final int GEMME_BLEUE = 3;
+    protected static final int CORBEAU = 4;
+    protected static final int NORD = 11;
+    protected static final int EST = 21;
+    protected static final int SUD = 31;
+    protected static final int OUEST = 41;
+    protected static final int DEPART = 50;
+    protected static final int ARRIVEE = 60;
 
-    private static final int LIGNES = 17;
-    private static final int COLONNES = 23;
+    protected static final int LIGNES = 17;
+    protected static final int COLONNES = 23;
     
-    /**
-     * @param args the command line arguments
-     * @throws java.lang.InterruptedException
-     */
-    public static void main(String[] args) throws InterruptedException {
+    private static final int ICON_SIZE = 32;  
+    private static final int HAUTEUR = 664;
+    private static final int LARGEUR = 736;
+   
+
+    public CravenLabyrinth() {
         JFrame MyWindow;
         
         JPanel CommandPanel;
@@ -98,7 +98,7 @@ public class CravenLabyrinth {
         CommandPanel = new JPanel();
         CommandPanel.setBackground(Color.red);
         CommandPanel.setLayout(new FlowLayout());        
-        CommandPanel.setPreferredSize(new Dimension(LARGEUR, ICON_SIZE));
+//        CommandPanel.setPreferredSize(new Dimension(LARGEUR, ICON_SIZE));
         CommandPanel.add(Recommencer);
         CommandPanel.add(Resoudre);
         CommandPanel.add(Arreter);
@@ -145,15 +145,10 @@ public class CravenLabyrinth {
         JeuPanel = new JPanel();
         JeuPanel.setBackground(Color.green);
         JeuPanel.setLayout(new GridLayout(LIGNES, COLONNES));
-//        GBC = new GridBagConstraints();
-//        GBC.gridheight = 1;
-//        GBC.gridwidth = 1;
         
         Dalles = new Dalle[LIGNES][COLONNES];
         for(i = 0; i < LIGNES; i++) {
-//            GBC.gridx = i;
             for(j = 0; j < COLONNES; j++) {
-//                GBC.gridy = j;
                 Dalles[i][j] = new Dalle();
                 JeuPanel.add(Dalles[i][j]);
 //                Thread.sleep(1000);
@@ -275,8 +270,13 @@ public class CravenLabyrinth {
         MyWindow.pack();
         MyWindow.setVisible(true);
     }
-    private static final int ICON_SIZE = 32;  
-    private static final int HAUTEUR = 664;
-    private static final int LARGEUR = 736;
-    
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        
+        CravenLabyrinth MyCravenLabyrinth = new CravenLabyrinth();
+        
+}
 }
