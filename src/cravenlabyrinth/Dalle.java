@@ -5,8 +5,8 @@
  */
 package cravenlabyrinth;
 
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -68,18 +68,30 @@ public class Dalle extends JLabel {
 
     public void loadIcon(int status) {
         
+        String Filename;
+        
         switch(status) {
-            case CASE_LIBRE: setIcon(new ImageIcon("Images/dalle_32x32.jpg"));
+            case CASE_LIBRE: Filename = new String("/dalle_32x32.jpg");
                 break;
-            case GEMME_ROUGE: setIcon(new ImageIcon("Images/gemme_rouge_32x31.png"));
+            case GEMME_ROUGE: Filename = new String("/gemme_rouge_32x32.png");
                 break;
-            case GEMME_BLEUE: setIcon(new ImageIcon("Images/gemme_bleue_32x29.png"));
+            case GEMME_BLEUE: Filename = new String("/gemme_bleue_32x32.png");
                 break;
-            case CORBEAU: setIcon(new ImageIcon("Images/corbeau_03_32x32.jpg"));
+            case CORBEAU: Filename = new String("/corbeau_03_32x32.jpg");
                 break;
-            default: setIcon(new ImageIcon("Images/mur_32x32.jpg"));
+            case DEPART: Filename = new String("/entree_32x32.jpg");
+                break;
+            case ARRIVEE: Filename = new String("/sortie_32x32.jpg");
+                break;
+            default: Filename = new String("/mur_32x32.jpg");
                 break;
         }
+//        System.out.println("Filename=" + Filename + ", getClass()=" + getClass() + 
+//                ", URL=" + getClass().getResource("/mur_32x32.jpg"));
+        setIcon(new ImageIcon(getClass().getResource(Filename)));
+//        setIcon(new ImageIcon(getClass().getResource("/org/me/myimageapp/newpackage/image.png")));
+//        setIcon(new ImageIcon(getClass().getResource("Images/mur_32x32.jpg")));
+//        setIcon(new ImageIcon("Images/mur_32x32.jpg"));
                 
     }
 }

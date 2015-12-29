@@ -56,12 +56,16 @@ public class CravenLabyrinth {
         ImageIcon MurIcon;
         ImageIcon DalleIcon;
         ImageIcon CorbeauIcon;
+        ImageIcon EntreeIcon;
+        ImageIcon SortieIcon;
         
         JLabel GemmeRougeLabel;
         JLabel GemmeBleueLabel;
         JLabel MurLabel;
         JLabel DalleLabel;
         JLabel CorbeauLabel;
+        JLabel EntreeLabel;
+        JLabel SortieLabel;
         
         AgainButton Recommencer;
         SolveButton Resoudre;
@@ -78,6 +82,8 @@ public class CravenLabyrinth {
         MurIcon = new ImageIcon("Images/mur_32x32.jpg");
         DalleIcon = new ImageIcon("Images/dalle_32x32.jpg");
         CorbeauIcon = new ImageIcon("Images/corbeau_03_32x32.jpg");
+        EntreeIcon = new ImageIcon("Images/entree_32x32.jpg");
+        SortieIcon = new ImageIcon("Images/sortie_32x32.jpg");
         
         Recommencer = new AgainButton();
         Resoudre = new SolveButton();
@@ -121,6 +127,14 @@ public class CravenLabyrinth {
         CorbeauLabel = new JLabel();
         CorbeauLabel.setIcon(CorbeauIcon);
         PalettePanel.add(CorbeauLabel);
+
+        EntreeLabel = new JLabel();
+        EntreeLabel.setIcon(EntreeIcon);
+        PalettePanel.add(EntreeLabel);
+
+        SortieLabel = new JLabel();
+        SortieLabel.setIcon(SortieIcon);
+        PalettePanel.add(SortieLabel);
 
         TopPanel = new JPanel();
         TopPanel.setBackground(Color.pink);
@@ -248,7 +262,7 @@ public class CravenLabyrinth {
 
         i++;
         Dalles[i][1].setStatus(CORBEAU);
-        Dalles[i][21].setStatus(CASE_LIBRE);
+        Dalles[i][21].setStatus(ARRIVEE);
         
         DebugPanel = new JPanel();
         DebugPanel.setBackground(Color.yellow);
