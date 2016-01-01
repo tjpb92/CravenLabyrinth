@@ -1,32 +1,24 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package cravenlabyrinth;
+package ravenlabyrinth;
 
+import static ravenlabyrinth.RavenLabyrinth.WALL;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 
 /**
  *
  * @author Thierry Baribaud
+ * @version 1.0.0
  */
-public class Dalle extends JLabel {
+public class Slab extends JLabel {
        
     private int i;
     private int j;
     private int status;
     
-    private Dalle VersLeNord;
-    private Dalle VersLEst;
-    private Dalle VersLeSud;
-    private Dalle VersLOuest;
-    
-    public Dalle() {
+    public Slab() {
         setI(0);
         setJ(0);
-        setStatus(CravenLabyrinth.MUR);
+        setStatus(WALL);
     }
     
     public void setI(int i) {
@@ -59,17 +51,17 @@ public class Dalle extends JLabel {
         String Filename;
         
         switch(status) {
-            case CravenLabyrinth.CASE_LIBRE: Filename = "/dalle_32x32.jpg";
+            case RavenLabyrinth.FREE_SLAB: Filename = "/dalle_32x32.jpg";
                 break;
-            case CravenLabyrinth.GEMME_ROUGE: Filename = "/gemme_rouge_32x32.png";
+            case RavenLabyrinth.REG_GEM: Filename = "/gemme_rouge_32x32.png";
                 break;
-            case CravenLabyrinth.GEMME_BLEUE: Filename = "/gemme_bleue_32x32.png";
+            case RavenLabyrinth.BLUE_GEM: Filename = "/gemme_bleue_32x32.png";
                 break;
-            case CravenLabyrinth.CORBEAU: Filename = "/corbeau_03_32x32.jpg";
+            case RavenLabyrinth.RAVEN: Filename = "/corbeau_03_32x32.jpg";
                 break;
-            case CravenLabyrinth.DEPART: Filename = "/entree_32x32.jpg";
+            case RavenLabyrinth.STARTING_POINT: Filename = "/entree_32x32.jpg";
                 break;
-            case CravenLabyrinth.ARRIVEE: Filename = "/sortie_32x32.jpg";
+            case RavenLabyrinth.ARRIVING_POINT: Filename = "/sortie_32x32.jpg";
                 break;
             default: Filename = "/mur_32x32.jpg";
                 break;

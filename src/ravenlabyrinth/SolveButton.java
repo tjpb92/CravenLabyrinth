@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cravenlabyrinth;
+package ravenlabyrinth;
 
 import javax.swing.JButton;
 
@@ -11,9 +11,9 @@ import javax.swing.JButton;
  *
  * @author Thierry Baribaud
  */
-public class AgainButton extends JButton {
+public class SolveButton extends JButton {
     
-    public AgainButton() {
-        super("Recommencer");
+    public SolveButton() {
+        super("Résoudre");
     }
 }
