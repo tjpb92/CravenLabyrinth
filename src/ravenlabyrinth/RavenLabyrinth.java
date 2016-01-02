@@ -16,12 +16,11 @@ import javax.swing.JPanel;
  * @version 1.0.0
  */
 
-
 public class RavenLabyrinth {
 
     protected static final int WALL = 0;
     protected static final int FREE_SLAB = 1;
-    protected static final int REG_GEM = 2;
+    protected static final int RED_GEM = 2;
     protected static final int BLUE_GEM = 3;
     protected static final int RAVEN = 4;
     protected static final int NORTH = 11;
@@ -37,11 +36,13 @@ public class RavenLabyrinth {
     private static final int ICON_SIZE = 32;  
     private static final int HEIGHT = 664;
     private static final int WIDTH = 736;
+    private static final int DELAY = 2000;
    
 
-    public RavenLabyrinth() {
+    public RavenLabyrinth() throws InterruptedException {
         JFrame MyWindow;
         LabyrinthMap MyLabyrinthMap;
+        Raven MyRaven;
         
         JPanel CommandPanel;
         JPanel PalettePanel;
@@ -137,6 +138,7 @@ public class RavenLabyrinth {
         TopPanel.add(PalettePanel);
         
         MyLabyrinthMap = new LabyrinthMap();
+        MyRaven = new Raven();
        
         DebugPanel = new JPanel();
         DebugPanel.setBackground(Color.yellow);
@@ -149,14 +151,42 @@ public class RavenLabyrinth {
         
         MyWindow.pack();
         MyWindow.setVisible(true);
+        
+        Thread.sleep(DELAY);
+        MyLabyrinthMap.putOnMap(MyRaven);
+        
+        for(i=0; i<3; i++) {
+            Thread.sleep(DELAY);
+            MyLabyrinthMap.moveNorth(MyRaven);
+        }
+        for(i=0; i<4; i++) {
+            Thread.sleep(DELAY);
+            MyLabyrinthMap.moveEast(MyRaven);
+        }
+        for(i=0; i<4; i++) {
+            Thread.sleep(DELAY);
+            MyLabyrinthMap.moveNorth(MyRaven);
+        }
+        for(i=0; i<4; i++) {
+            Thread.sleep(DELAY);
+            MyLabyrinthMap.moveWest(MyRaven);
+        }
+        for(i=0; i<6; i++) {
+            Thread.sleep(DELAY);
+            MyLabyrinthMap.moveSouth(MyRaven);
+        }
+
     }
 
     /**
      * @param args the command line arguments
+     * @throws java.lang.InterruptedException
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         
-        RavenLabyrinth MyCravenLabyrinth = new RavenLabyrinth();
+        RavenLabyrinth MyCravenLabyrinth;
+        
+        MyCravenLabyrinth = new RavenLabyrinth();
         
 }
 }
