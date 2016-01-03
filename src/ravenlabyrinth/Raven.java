@@ -1,12 +1,15 @@
 package ravenlabyrinth;
 
-import java.awt.Point;
+import static ravenlabyrinth.RavenLabyrinth.ARRIVING_POINT;
+import static ravenlabyrinth.RavenLabyrinth.BLUE_GEM;
+import static ravenlabyrinth.RavenLabyrinth.FREE_SLAB;
 import static ravenlabyrinth.RavenLabyrinth.RAVEN;
+import static ravenlabyrinth.RavenLabyrinth.RED_GEM;
 
 /**
  * Raven is a class that defines craven's name, coordinates and more.
  * @author Thierry Baribaud
- * @version 1.0.0
+ * @version 1.0.5
  */
 public class Raven {
     
@@ -18,25 +21,30 @@ public class Raven {
     /**
      * Raven's status.
      */
-    private final int status = RAVEN;
+    private static final int status = RAVEN;
     
     /**
-     * Raven's coordinates on the map.
+     * Value of the previous gem encountered.
      */
-    private Point Location;
+    private int previousGem;
     
     /**
-     * Value of the previous gem.
+     * Reference to the current slab where the raven stands.
      */
-    private int gem;
+    private Slab CurrentSlab;
+    
+    /**
+     * Reference to the expected slab where the raven will stand.
+     */
+    private Slab ExpectedSlab;
     
     public Raven() {
         setName("Corbeau");
-        setGem(0);
-        setLocation(new Point(16, 1));
+        setPreviousGem(0);
     }
+    
     /**
-     * Set cravan's name to the value passed as parameter.
+     * Set craven's name to the value passed as parameter.
      * @param Name craven's name
      */
     public void setName(String Name) {
@@ -52,35 +60,19 @@ public class Raven {
     }
     
     /**
-     * Set craven's coordinates to the Location passed as parameter.
-     * @param Location craven's coordinates.
+     * Memorize the value of the current gem and set it as previous gem.
+     * @param previousGem Current gem value.
      */
-    public void setLocation(Point Location) {
-        this.Location = Location;
-    }
-    
-    /**
-     * Get craven's coordinates.
-     * @return craven's coordinates.
-     */
-    public Point getLocation() {
-        return(Location);
-    }
-
-    /**
-     * Memorize the value of the current gem.
-     * @param currentGem Current gem value.
-     */
-    public void setGem(int currentGem) {
-        this.gem = currentGem;
+    public void setPreviousGem(int previousGem) {
+        this.previousGem = previousGem;
     }
     
     /**
      * Return the value of the previous gem.
      * @return value of the previous gem.
      */
-    public int getGem() {
-        return(this.gem);
+    public int getPreviousGem() {
+        return(this.previousGem);
     }
 
     /**
@@ -95,28 +87,110 @@ public class Raven {
      * Move raven northward.
      */
     public void moveNorth() {
-        Location.setLocation(Location.x-1, Location.y);
+        Slab NorthSlab;
+        
+        NorthSlab = CurrentSlab.getNorthSlab();
+        if (NorthSlab != null) {
+            CurrentSlab = NorthSlab;
+        }
     }
 
     /**
      * Move raven eastward.
      */
     public void moveEast() {
-        Location.setLocation(Location.x, Location.y+1);
+        Slab EastSlab;
+        
+        EastSlab = CurrentSlab.getEastSlab();
+        if (EastSlab != null) {
+            CurrentSlab = EastSlab;
+        }
     }
 
     /**
      * Move raven southward.
      */
     public void moveSouth() {
-        Location.setLocation(Location.x+1, Location.y);
+        Slab SouthSlab;
+        
+        SouthSlab = CurrentSlab.getSouthSlab();
+        if (SouthSlab != null) {
+            CurrentSlab = SouthSlab;
+        }
     }
     
     /**
      * Move raven westward.
      */
     public void moveWest() {
-        Location.setLocation(Location.x, Location.y-1);
+        Slab WestSlab;
+        
+        WestSlab = CurrentSlab.getWestSlab();
+        if (WestSlab != null) {
+            CurrentSlab = WestSlab;
+        }
     }
 
+    /**
+     * Return the reference of the current slab where stands the raven.
+     * @return the reference of the current slab where stands the raven.
+     */
+    public Slab getCurrentSlab() {
+        return(CurrentSlab);
+    }
+    
+    /**
+     * Set the reference of the current slab where stands the raven.
+     * @param MyCurrentSlab the reference of the current slab where stands the raven.
+     */
+    public void setCurrentSlab(Slab MyCurrentSlab) {
+        this.CurrentSlab = MyCurrentSlab;
+        this.setPreviousGem(MyCurrentSlab.getGem());
+    }
+    
+    /**
+     * Return the reference of the expected slab where the raven will be.
+     * @return the reference of the expected slab where the raven will be.
+     */
+    public Slab getExpectedSlab() {
+        return(ExpectedSlab);
+    }
+    
+    /**
+     * Set the reference of the expected slab where the raven will be.
+     */
+    public void setExpectedSlab() {
+        
+    }
+
+    public boolean scanNorth() {
+        return(scanSlab(CurrentSlab.getNorthSlab().getStatus(), getPreviousGem()));
+    }
+    
+    public boolean scanEast() {
+        return(scanSlab(CurrentSlab.getEastSlab().getStatus(), getPreviousGem()));
+    }
+    
+    public boolean scanSouth() {
+        return(scanSlab(CurrentSlab.getSouthSlab().getStatus(), getPreviousGem()));
+    }
+    
+    public boolean scanWest() {
+        return(scanSlab(CurrentSlab.getWestSlab().getStatus(), getPreviousGem()));
+    }
+    
+    private boolean scanSlab(int slabStatus, int ravenStatus) {
+        boolean retcode;
+        
+//        retcode = false;
+        if (slabStatus == FREE_SLAB) {
+            retcode = true;
+        }
+        else if (slabStatus == RED_GEM || slabStatus == BLUE_GEM) {
+            retcode = ravenStatus != slabStatus;
+        } 
+        else retcode = slabStatus == ARRIVING_POINT;
+        
+        return(retcode);
+    }
 }

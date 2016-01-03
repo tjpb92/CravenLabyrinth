@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 /**
  *
  * @author Thierry Baribaud
- * @version 1.0.0
+ * @version 1.0.5
  */
 
 public class RavenLabyrinth {
@@ -71,6 +71,7 @@ public class RavenLabyrinth {
         
         int i;
         int j;
+        boolean flag;
         
         RedGemIcon = new ImageIcon("Images/gemme_rouge_32x31.png");
         BlueGemIcon = new ImageIcon("Images/gemme_bleue_32x29.png");
@@ -85,7 +86,7 @@ public class RavenLabyrinth {
         Stop = new StopButton();
         
         MyWindow = new JFrame();
-        MyWindow.setTitle("Enigme du corbeau et de la marelle");
+        MyWindow.setTitle("Le corbeau et le labyrinth");
         MyWindow.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 //        MyWindow.setLocationRelativeTo(null);
         MyWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -139,6 +140,7 @@ public class RavenLabyrinth {
         
         MyLabyrinthMap = new LabyrinthMap();
         MyRaven = new Raven();
+        MyRaven.setCurrentSlab(MyLabyrinthMap.getStartingPoint());
        
         DebugPanel = new JPanel();
         DebugPanel.setBackground(Color.yellow);
@@ -155,26 +157,50 @@ public class RavenLabyrinth {
         Thread.sleep(DELAY);
         MyLabyrinthMap.putOnMap(MyRaven);
         
-        for(i=0; i<3; i++) {
+        for(i=0; i<11; i++) {
             Thread.sleep(DELAY);
-            MyLabyrinthMap.moveNorth(MyRaven);
+            flag = MyRaven.scanNorth();
+            System.out.println("ScanNorth=" + flag);
+            if (flag) {
+                MyLabyrinthMap.takeOffMap(MyRaven);
+                MyRaven.moveNorth();
+                MyLabyrinthMap.putOnMap(MyRaven);
+            }
+            else {
+                System.out.println("North move not possible");
+            }
         }
-        for(i=0; i<4; i++) {
+
+        for(i=0; i<7; i++) {
             Thread.sleep(DELAY);
-            MyLabyrinthMap.moveEast(MyRaven);
+            flag = MyRaven.scanEast();
+            System.out.println("ScanEast=" + flag);
+            if (flag) {
+                MyLabyrinthMap.takeOffMap(MyRaven);
+                MyRaven.moveEast();
+                MyLabyrinthMap.putOnMap(MyRaven);
+            }
+            else {
+                System.out.println("East move not possible");
+            }
         }
-        for(i=0; i<4; i++) {
-            Thread.sleep(DELAY);
-            MyLabyrinthMap.moveNorth(MyRaven);
-        }
-        for(i=0; i<4; i++) {
-            Thread.sleep(DELAY);
-            MyLabyrinthMap.moveWest(MyRaven);
-        }
-        for(i=0; i<6; i++) {
-            Thread.sleep(DELAY);
-            MyLabyrinthMap.moveSouth(MyRaven);
-        }
+         
+//        for(i=0; i<4; i++) {
+//            Thread.sleep(DELAY);
+//            MyLabyrinthMap.moveEast(MyRaven);
+//        }
+//        for(i=0; i<4; i++) {
+//            Thread.sleep(DELAY);
+//            MyLabyrinthMap.moveNorth(MyRaven);
+//        }
+//        for(i=0; i<4; i++) {
+//            Thread.sleep(DELAY);
+//            MyLabyrinthMap.moveWest(MyRaven);
+//        }
+//        for(i=0; i<6; i++) {
+//            Thread.sleep(DELAY);
+//            MyLabyrinthMap.moveSouth(MyRaven);
+//        }
 
     }
 
@@ -188,5 +214,5 @@ public class RavenLabyrinth {
         
         MyCravenLabyrinth = new RavenLabyrinth();
         
-}
+    }
 }

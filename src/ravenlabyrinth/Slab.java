@@ -3,29 +3,53 @@ package ravenlabyrinth;
 import static ravenlabyrinth.RavenLabyrinth.WALL;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
+import static ravenlabyrinth.RavenLabyrinth.BLUE_GEM;
+import static ravenlabyrinth.RavenLabyrinth.RED_GEM;
 
 /**
  * Represents a slab.
  * @author Thierry Baribaud
- * @version 1.0.0
+ * @version 1.0.5
  */
 public class Slab extends JLabel {
        
-    private int column;
     private int row;
+    private int column;
     private int status;
     private int previousStatus;
+    private Slab NorthSlab;
+    private Slab EastSlab;
+    private Slab SouthSlab;
+    private Slab WestSlab;
     
     /**
-     * Create a slab, default position (0, 0), status WALL
+     * Create a slab, status WALL
+     * @param row ordinate of the slab,
+     * @param column abscissa of the slab
      */
-    public Slab() {
-        setColumn(0);
-        setRow(0);
+    public Slab(int row, int column) {
+        setRow(row);
+        setColumn(column);
         setStatus(WALL);
         saveCurrentStatus();
     }
     
+    /**
+     * Set slab row value.
+     * @param row slab row value.
+     */
+    public void setRow(int row) {
+        this.row = row;
+    }
+    
+    /**
+     * Return slab row value.
+     * @return slab row value.
+     */
+    public int getRow() {
+        return(this.row);
+    }
+
     /**
      * Set slab abscissa to the value passes as parameter (column).
      * @param column slab column index.
@@ -58,22 +82,6 @@ public class Slab extends JLabel {
      */
     public int getStatus() {
         return(this.status);
-    }
-
-    /**
-     * Set slab row value.
-     * @param row slab row value.
-     */
-    public void setRow(int row) {
-        this.row = row;
-    }
-    
-    /**
-     * Return slab row value.
-     * @return slab row value.
-     */
-    public int getRow() {
-        return(this.row);
     }
 
     /**
@@ -116,4 +124,91 @@ public class Slab extends JLabel {
         }
         setIcon(new ImageIcon(getClass().getResource(Filename)));              
     }
+    
+    /**
+     * Return gem value or 0 if any
+     * @return gem value or 0 if any
+     */
+    public int getGem() {
+        int gem;
+        
+        gem = getStatus();
+        if (gem != RED_GEM && gem != BLUE_GEM) gem = 0;
+        
+        return(gem);
+    }
+    
+    /**
+     * Return the desciption of the slab.
+     * @return the desciption of the slab.
+     */
+    @Override
+    public String toString() {
+        return("Slab(" + getRow() + "," + getColumn() + ")" + ", status=" + getStatus());
+    }
+
+    /**
+     * Get the reference of the northern slab.
+     * @return the reference of the northern slab.
+     */
+    public Slab getNorthSlab() {
+        return(this.NorthSlab);
+    }
+
+    /**
+     * Set the reference to the northern slab.
+     * @param NorthSlab the reference to the northern slab.
+     */
+    public void setNorthSlab(Slab NorthSlab) {
+        this.NorthSlab = NorthSlab;
+    }
+
+    /**
+     * Get the reference of the eastern slab.
+     * @return the reference of the eastern slab.
+     */
+    public Slab getEastSlab() {
+        return(this.EastSlab);
+    }
+
+    /**
+     * Set the reference to the eastern slab.
+     * @param EastSlab the reference to the eastern slab.
+     */
+    public void setEastSlab(Slab EastSlab) {
+        this.EastSlab = EastSlab;
+    }
+
+    /**
+     * Get the reference of the southern slab.
+     * @return the reference of the southern slab.
+     */
+    public Slab getSouthSlab() {
+        return(this.SouthSlab);
+    }
+
+    /**
+     * Set the reference to the southern slab.
+     * @param SouthSlab the reference to the southern slab.
+     */
+    public void setSouthSlab(Slab SouthSlab) {
+        this.SouthSlab = SouthSlab;
+    }
+
+    /**
+     * Get the reference of the western slab.
+     * @return the reference of the western slab.
+     */
+    public Slab getWestSlab() {
+        return(this.WestSlab);
+    }
+
+    /**
+     * Set the reference to the western slab.
+     * @param WestSlab the reference to the western slab.
+     */
+    public void setWestSlab(Slab WestSlab) {
+        this.WestSlab = WestSlab;
+    }
+
 }

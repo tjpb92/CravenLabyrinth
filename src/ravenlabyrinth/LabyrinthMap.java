@@ -14,7 +14,7 @@ import java.awt.Panel;
 /**
  * Class that describes the map of the labyrinth.
  * @author Thierry Baribaud
- * @version 1.0.0
+ * @version 1.0.5
  */
 public class LabyrinthMap extends Panel {
    
@@ -32,126 +32,168 @@ public class LabyrinthMap extends Panel {
      * Constructor of LabyrinthMap class.
      */
     public LabyrinthMap() {
-        
 
-        int i, j;
-                
+        int row, column;
+        Slab CurrentSlab;
+        Slab TempSlab;
+        int i;
+                        
         setBackground(Color.green);
         setLayout(new GridLayout(ROWS, COLUMNS));
         
+        CurrentSlab = null;
+        TempSlab = null;
+
         Slabs = new Slab[ROWS][COLUMNS];
-        for(i = 0; i < ROWS; i++) {
-            for(j = 0; j < COLUMNS; j++) {
-                Slabs[i][j] = new Slab();
-                add(Slabs[i][j]);
-//                Thread.sleep(1000);
+        for(row = 0; row < ROWS; row++) {
+            for(column = 0; column < COLUMNS; column++) {
+                Slabs[row][column] = new Slab(row, column);
+                add(Slabs[row][column]);
             }
         }
         
-        i = 1;
-        for (j=5; j < 18; j++) {
-            Slabs[i][j].setStatus(FREE_SLAB);
-        }
-        Slabs[i][11].setStatus(RED_GEM);
-        
-        i++;
-        Slabs[i][5].setStatus(FREE_SLAB);
-        Slabs[i][17].setStatus(FREE_SLAB);
+        // Fill four directions references
+        for(row = 0; row < ROWS; row++) {
+            for (column = 0; column < COLUMNS; column++) {
+                CurrentSlab = Slabs[row][column];
 
-        i++;
-        Slabs[i][5].setStatus(BLUE_GEM);
-        Slabs[i][17].setStatus(BLUE_GEM);
+                // Fill north reference if possible
+                i = row - 1;
+                if (i > 0 ) {
+                    TempSlab = Slabs[i][column];
+                    CurrentSlab.setNorthSlab(TempSlab);
+                    TempSlab.setSouthSlab(CurrentSlab);
+                }
+                
+                // Fill east reference if possible
+                i = column + 1;
+                if (i < COLUMNS) {
+                    TempSlab = Slabs[row][i];
+                    CurrentSlab.setEastSlab(TempSlab);
+                    TempSlab.setWestSlab(CurrentSlab);
+                }
+                
+                // Fill south reference if possible
+                i = row + 1;
+                if (i < ROWS) {
+                    TempSlab = Slabs[i][column];
+                    CurrentSlab.setSouthSlab(TempSlab);
+                    TempSlab.setNorthSlab(CurrentSlab);
+                }
+                
+                // Fill west reference if possible
+                i = column - 1;
+                if (i > 0) {
+                    TempSlab = Slabs[row][i];
+                    CurrentSlab.setWestSlab(TempSlab);
+                    TempSlab.setEastSlab(CurrentSlab);
+                }
+            }
+        }
+        
+        row = 1;
+        for (column=5; column < 18; column++) {
+            Slabs[row][column].setStatus(FREE_SLAB);
+        }
+        Slabs[row][11].setStatus(RED_GEM);
+        
+        row++;
+        Slabs[row][5].setStatus(FREE_SLAB);
+        Slabs[row][17].setStatus(FREE_SLAB);
 
-        i++;
-        Slabs[i][5].setStatus(FREE_SLAB);
-        Slabs[i][17].setStatus(FREE_SLAB);
-        
-        i++;
-        for (j=1; j < 22; j++) {
-            Slabs[i][j].setStatus(FREE_SLAB);
-        }
-        Slabs[i][3].setStatus(BLUE_GEM);
-        Slabs[i][7].setStatus(BLUE_GEM);
-        Slabs[i][15].setStatus(RED_GEM);
-        
-        i++;
-        Slabs[i][1].setStatus(FREE_SLAB);
-        Slabs[i][5].setStatus(FREE_SLAB);
-        Slabs[i][9].setStatus(FREE_SLAB);
-        Slabs[i][13].setStatus(FREE_SLAB);
-        Slabs[i][17].setStatus(FREE_SLAB);
-        Slabs[i][21].setStatus(FREE_SLAB);
-        
-        i++;
-        Slabs[i][1].setStatus(RED_GEM);
-        Slabs[i][5].setStatus(RED_GEM);
-        Slabs[i][9].setStatus(RED_GEM);
-        Slabs[i][13].setStatus(BLUE_GEM);
-        Slabs[i][17].setStatus(RED_GEM);
-        Slabs[i][21].setStatus(RED_GEM);
-        
-        i++;
-        Slabs[i][1].setStatus(FREE_SLAB);
-        Slabs[i][5].setStatus(FREE_SLAB);
-        Slabs[i][9].setStatus(FREE_SLAB);
-        Slabs[i][13].setStatus(FREE_SLAB);
-        Slabs[i][17].setStatus(FREE_SLAB);
-        Slabs[i][21].setStatus(FREE_SLAB);
+        row++;
+        Slabs[row][5].setStatus(BLUE_GEM);
+        Slabs[row][17].setStatus(BLUE_GEM);
 
-        i++;
-        for (j=1; j < 10; j++) {
-            Slabs[i][j].setStatus(FREE_SLAB);
-        }
-        for (j=13; j < 22; j++) {
-            Slabs[i][j].setStatus(FREE_SLAB);
-        }
-        Slabs[i][3].setStatus(BLUE_GEM);
-        Slabs[i][7].setStatus(RED_GEM);
-        Slabs[i][15].setStatus(RED_GEM);
-        Slabs[i][19].setStatus(BLUE_GEM);
+        row++;
+        Slabs[row][5].setStatus(FREE_SLAB);
+        Slabs[row][17].setStatus(FREE_SLAB);
         
-        i++;
-        Slabs[i][1].setStatus(FREE_SLAB);
-        Slabs[i][5].setStatus(FREE_SLAB);
-        Slabs[i][9].setStatus(FREE_SLAB);
-        Slabs[i][13].setStatus(FREE_SLAB);
-        Slabs[i][17].setStatus(FREE_SLAB);
-        Slabs[i][21].setStatus(FREE_SLAB);
-
-        i++;
-        Slabs[i][1].setStatus(BLUE_GEM);
-        Slabs[i][5].setStatus(BLUE_GEM);
-        Slabs[i][9].setStatus(FREE_SLAB);
-        Slabs[i][13].setStatus(FREE_SLAB);
-        Slabs[i][17].setStatus(FREE_SLAB);
-        Slabs[i][21].setStatus(BLUE_GEM);
+        row++;
+        for (column=1; column < 22; column++) {
+            Slabs[row][column].setStatus(FREE_SLAB);
+        }
+        Slabs[row][3].setStatus(BLUE_GEM);
+        Slabs[row][7].setStatus(BLUE_GEM);
+        Slabs[row][15].setStatus(RED_GEM);
         
-        i++;
-        Slabs[i][1].setStatus(FREE_SLAB);
-        Slabs[i][5].setStatus(FREE_SLAB);
-        Slabs[i][9].setStatus(FREE_SLAB);
-        Slabs[i][13].setStatus(FREE_SLAB);
-        Slabs[i][17].setStatus(FREE_SLAB);
-        Slabs[i][21].setStatus(FREE_SLAB);
+        row++;
+        Slabs[row][1].setStatus(FREE_SLAB);
+        Slabs[row][5].setStatus(FREE_SLAB);
+        Slabs[row][9].setStatus(FREE_SLAB);
+        Slabs[row][13].setStatus(FREE_SLAB);
+        Slabs[row][17].setStatus(FREE_SLAB);
+        Slabs[row][21].setStatus(FREE_SLAB);
+        
+        row++;
+        Slabs[row][1].setStatus(RED_GEM);
+        Slabs[row][5].setStatus(RED_GEM);
+        Slabs[row][9].setStatus(RED_GEM);
+        Slabs[row][13].setStatus(BLUE_GEM);
+        Slabs[row][17].setStatus(RED_GEM);
+        Slabs[row][21].setStatus(RED_GEM);
+        
+        row++;
+        Slabs[row][1].setStatus(FREE_SLAB);
+        Slabs[row][5].setStatus(FREE_SLAB);
+        Slabs[row][9].setStatus(FREE_SLAB);
+        Slabs[row][13].setStatus(FREE_SLAB);
+        Slabs[row][17].setStatus(FREE_SLAB);
+        Slabs[row][21].setStatus(FREE_SLAB);
 
-        i++;
-        for (j=1; j < 10; j++) {
-            Slabs[i][j].setStatus(FREE_SLAB);
+        row++;
+        for (column=1; column < 10; column++) {
+            Slabs[row][column].setStatus(FREE_SLAB);
         }
-        for (j=13; j < 22; j++) {
-            Slabs[i][j].setStatus(FREE_SLAB);
+        for (column=13; column < 22; column++) {
+            Slabs[row][column].setStatus(FREE_SLAB);
         }
-        Slabs[i][3].setStatus(RED_GEM);
-        Slabs[i][19].setStatus(RED_GEM);
+        Slabs[row][3].setStatus(BLUE_GEM);
+        Slabs[row][7].setStatus(RED_GEM);
+        Slabs[row][15].setStatus(RED_GEM);
+        Slabs[row][19].setStatus(BLUE_GEM);
+        
+        row++;
+        Slabs[row][1].setStatus(FREE_SLAB);
+        Slabs[row][5].setStatus(FREE_SLAB);
+        Slabs[row][9].setStatus(FREE_SLAB);
+        Slabs[row][13].setStatus(FREE_SLAB);
+        Slabs[row][17].setStatus(FREE_SLAB);
+        Slabs[row][21].setStatus(FREE_SLAB);
+
+        row++;
+        Slabs[row][1].setStatus(BLUE_GEM);
+        Slabs[row][5].setStatus(BLUE_GEM);
+        Slabs[row][9].setStatus(FREE_SLAB);
+        Slabs[row][13].setStatus(FREE_SLAB);
+        Slabs[row][17].setStatus(FREE_SLAB);
+        Slabs[row][21].setStatus(BLUE_GEM);
+        
+        row++;
+        Slabs[row][1].setStatus(FREE_SLAB);
+        Slabs[row][5].setStatus(FREE_SLAB);
+        Slabs[row][9].setStatus(FREE_SLAB);
+        Slabs[row][13].setStatus(FREE_SLAB);
+        Slabs[row][17].setStatus(FREE_SLAB);
+        Slabs[row][21].setStatus(FREE_SLAB);
+
+        row++;
+        for (column=1; column < 10; column++) {
+            Slabs[row][column].setStatus(FREE_SLAB);
+        }
+        for (column=13; column < 22; column++) {
+            Slabs[row][column].setStatus(FREE_SLAB);
+        }
+        Slabs[row][3].setStatus(RED_GEM);
+        Slabs[row][19].setStatus(RED_GEM);
     
-        i++;
-        Slabs[i][1].setStatus(RED_GEM);
-        Slabs[i][21].setStatus(RED_GEM);
+        row++;
+        Slabs[row][1].setStatus(RED_GEM);
+        Slabs[row][21].setStatus(RED_GEM);
 
-        i++;
-        Slabs[i][1].setStatus(STARTING_POINT);
-        Slabs[i][21].setStatus(ARRIVING_POINT);
- 
+        row++;
+        Slabs[row][1].setStatus(STARTING_POINT);
+        Slabs[row][21].setStatus(ARRIVING_POINT);
     }
     
     /**
@@ -169,95 +211,47 @@ public class LabyrinthMap extends Panel {
     public int getPreviousStatus() {
         return(this.previousStatus);
     }
+    
     public void putOnMap(Raven MyRaven) {
-        int currentRow, currentColumn, status;
+        int status;
         Slab CurrentSlab;
         
-        currentRow = (int) MyRaven.getLocation().getX();
-        currentColumn = (int) MyRaven.getLocation().getY();
-        
-        CurrentSlab = Slabs[currentRow][currentColumn];
+        CurrentSlab = MyRaven.getCurrentSlab();
         CurrentSlab.saveCurrentStatus();
         status = CurrentSlab.getStatus();
         if (status == RED_GEM || status == BLUE_GEM) {
-            MyRaven.setGem(status);
+            MyRaven.setPreviousGem(status);
         }
         CurrentSlab.setStatus(MyRaven.getStatus());
     }
     
     /**
-     * Move raven one step to the north.
-     * @param MyRaven raven to move north.
+     * Remove the raven from the map.
+     * @param MyRaven the raven to remove from the map.
      */
-    public void moveNorth(Raven MyRaven) {
-        int currentRow, currentColumn;
+    public void takeOffMap(Raven MyRaven) {
         Slab CurrentSlab;
         
-        currentRow = (int) MyRaven.getLocation().getX();
-        currentColumn = (int) MyRaven.getLocation().getY();
-        
-        CurrentSlab = Slabs[currentRow][currentColumn];
+        CurrentSlab = MyRaven.getCurrentSlab();
         CurrentSlab.restaurePreviousStatus();
-        
-        MyRaven.moveNorth();
-        
-        putOnMap(MyRaven);
-    }
-
-    /**
-     * Move raven one step to the east.
-     * @param MyRaven raven to move east.
-     */
-    public void moveEast(Raven MyRaven) {
-        int currentRow, currentColumn;
-        Slab CurrentSlab;
-        
-        currentRow = (int) MyRaven.getLocation().getX();
-        currentColumn = (int) MyRaven.getLocation().getY();
-        
-        CurrentSlab = Slabs[currentRow][currentColumn];
-        CurrentSlab.restaurePreviousStatus();
-        
-        MyRaven.moveEast();
-        
-        putOnMap(MyRaven);
-    }
-
-    /**
-     * Move raven one step to the south.
-     * @param MyRaven raven to move south.
-     */
-    public void moveSouth(Raven MyRaven) {
-        int currentRow, currentColumn;
-        Slab CurrentSlab;
-        
-        currentRow = (int) MyRaven.getLocation().getX();
-        currentColumn = (int) MyRaven.getLocation().getY();
-        
-        CurrentSlab = Slabs[currentRow][currentColumn];
-        CurrentSlab.restaurePreviousStatus();
-        
-        MyRaven.moveSouth();
-        
-        putOnMap(MyRaven);
     }
     
     /**
-     * Move raven one step to the west.
-     * @param MyRaven raven to move west.
+     * Return the reference of the slab of coordinate (row, column)
+     * @param row ordinate of the slab,
+     * @param column abscissa of the slab,
+     * @return reference of the slab.
      */
-    public void moveWest(Raven MyRaven) {
-        int currentRow, currentColumn;
-        Slab CurrentSlab;
-        
-        currentRow = (int) MyRaven.getLocation().getX();
-        currentColumn = (int) MyRaven.getLocation().getY();
-        
-        CurrentSlab = Slabs[currentRow][currentColumn];
-        CurrentSlab.restaurePreviousStatus();
-        
-        MyRaven.moveWest();
-        
-        putOnMap(MyRaven);
+    public Slab getSlab(int row, int column) {
+ 
+        return(Slabs[row][column]);
+    }
+
+    /**
+     * Return the reference of the starting point.
+     * @return the reference of the starting point.
+     */
+    public Slab getStartingPoint() {
+        return(getSlab(15, 1));
     }
 }
